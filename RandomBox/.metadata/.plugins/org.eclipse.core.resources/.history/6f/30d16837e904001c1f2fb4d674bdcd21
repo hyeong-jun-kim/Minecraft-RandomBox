@@ -1,0 +1,9 @@
+name: RandomBox
+main: main.Main
+version: 1.0
+api-version: 1.12.2
+author: hamtser
+commands:
+ 諛뺤뒪:
+  usage: /<command>
+  description: give items

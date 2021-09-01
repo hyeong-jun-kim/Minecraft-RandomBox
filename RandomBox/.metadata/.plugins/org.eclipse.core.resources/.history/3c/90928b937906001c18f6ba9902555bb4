@@ -1,0 +1,46 @@
+package command;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import handler.RandomBox;
+
+public class CommandManager implements CommandExecutor{
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(!(sender instanceof Player)) {
+			sender.sendMessage("cmd에서는 이 작업을 수행하지 못합니다.");
+			return true;
+		}else {
+			if(label.equalsIgnoreCase("랜덤박스")) {
+				int len = args.length;
+				Player p = (Player)sender;
+				RandomBox randomBox = new RandomBox();
+				switch(len) {
+				case 0:
+					randomBox.printRandomBox(p);
+					break;
+				case 1:
+					if(args[0].equals("목록")) {
+						randomBox.listRandomBox(p);
+					}
+					break;
+				case 2:
+					String box_name = args[1];
+					if(args[0].equals("생성")) {					
+						randomBox.makeRandomBox(box_name,p);
+					}else if(args[0].equals("삭제")) {
+						randomBox.deleteRandomBox(box_name, p);
+					}else if(args[0].equals("지정")) {
+						randomBox.makeRandomBoxItem(box_name, p);
+					}
+					break;
+				}
+			}
+		}
+		return true;
+	}
+}

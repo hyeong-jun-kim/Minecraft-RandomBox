@@ -1,0 +1,10 @@
+name: RandomBox
+main: main.Main
+version: 1.0
+api-version: 1.12.2
+author: forceTlight
+commands:
+ 랜덤박스:
+  usage: /<command>
+  description: randomBox
+depend: [ProtocolLib]

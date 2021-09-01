@@ -1,0 +1,20 @@
+package main;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+import data.DataManager;
+
+public class Main extends JavaPlugin{
+	DataManager data;
+	@Override
+	public void onEnable() {
+		data = new DataManager(this);
+	}
+	@Override
+	public void onDisable() {
+		
+	}
+	public DataManager getData() {
+		return data;
+	}
+}

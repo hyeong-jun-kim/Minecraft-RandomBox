@@ -1,0 +1,44 @@
+package main;
+
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+
+import data.DataManager;
+
+public class Main extends JavaPlugin{
+	DataManager data;
+	@Override
+	public void onEnable() {
+		data = new DataManager(this);
+		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+		manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.POSITION) {
+			@Override
+			public void onPacketReceiving(PacketEvent e) {
+				PacketContainer packet = e.getPacket();
+				Player p = e.getPlayer();
+				double x = packet.getDoubles().read(0);
+				double y = packet.getDoubles().read(0);
+				double z = packet.getDoubles().read(0);
+				boolean isOnGround = packet.getBooleans().read(0);
+				
+				p.sendMessage("INBOUND PACKET: x: " + x + " y " + y + " z : " + z);
+				p.sendMessage("ON GROUND? " + isOnGround);
+			}
+		});
+	}
+	@Override
+	public void onDisable() {
+		
+	}
+	public DataManager getData() {
+		return data;
+	}
+}
